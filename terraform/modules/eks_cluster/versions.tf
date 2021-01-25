@@ -3,9 +3,5 @@ terraform {
 
   required_providers {
     aws        = "~> 3.0"
-    template   = "~> 2.0"
-    null       = "~> 2.0"
-    local      = "~> 1.3"
-    kubernetes = "~> 2.0"
   }
 }

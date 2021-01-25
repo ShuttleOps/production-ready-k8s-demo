@@ -9,5 +9,5 @@ webinar: 27/01/2021
 Setting up a kubeconfig for the EKS cluster:
 
 ```
-$ aws eks --region us-east-2 update-kubeconfig --name demo-dev-production-ready-k8s-cluster
+$ aws eks --region us-east-2 update-kubeconfig --name production-ready-k8s-demo
 ```
