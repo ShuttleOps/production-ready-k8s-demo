@@ -6,6 +6,8 @@ data "aws_region" "current" {
 }
 
 locals {
+  name = "production-ready-k8s"
+
   eks_cluster_min_size      = 2
   eks_cluster_max_size      = 2
   eks_cluster_desired_size  = 2
@@ -37,7 +39,7 @@ module "vpc" {
   enable_vpn_gateway = true
 
   tags = {
-    Environment = "dev-east"
+    Environment = local.name
   }
 }
 
@@ -50,7 +52,7 @@ module "eks" {
   subnet_ids         = module.vpc.private_subnets
   vpc_id             = module.vpc.vpc_id
 
-  name               = "production-ready-k8s"
+  name               = local.name
   namespace          = "demo"
   stage              = "dev"
 
