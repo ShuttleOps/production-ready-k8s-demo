@@ -8,9 +8,14 @@ variable "kubernetes_version" {
   description = "The version of Kubernetes to use for the EKS Control plane."
 }
 
-variable "subnet_ids" {
+variable "public_subnet_ids" {
   type        = list(string)
-  description = "A list of subnets to place the EKS cluster and workers within."
+  description = "A list of public subnets to configure the EKS control plane against."
+}
+
+variable "private_subnet_ids" {
+  type        = list(string)
+  description = "A list of private subnets to put the EKS worker nodes in."
 }
 
 variable "vpc_id" {

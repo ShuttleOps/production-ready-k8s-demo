@@ -12,20 +12,20 @@ provider "kubernetes" {
   token                  = data.aws_eks_cluster_auth.cluster.token
 }
 
-
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "13.2.1"
 
   cluster_name      = var.name
   cluster_version   = var.kubernetes_version
-  subnets           = var.subnet_ids
+  subnets           = var.public_subnet_ids
   vpc_id            = var.vpc_id
   write_kubeconfig  = false
   map_users         = var.iam_users
 
   worker_groups = [
     {
+      subnets       = var.private_subnet_ids
       instance_type = var.instance_type
       asg_max_size  = var.max_size
     }

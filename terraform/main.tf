@@ -46,7 +46,8 @@ module "vpc" {
 module "eks" {
   source = "./modules/eks_cluster"
 
-  subnet_ids         = module.vpc.private_subnets
+  public_subnet_ids  = module.vpc.public_subnets
+  private_subnet_ids = module.vpc.private_subnets
   vpc_id             = module.vpc.vpc_id
   name               = local.name
   max_size           = local.eks_cluster_max_size
