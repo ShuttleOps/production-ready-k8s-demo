@@ -59,7 +59,7 @@ module "eks" {
   subnet_ids         = module.vpc.private_subnets
   vpc_id             = module.vpc.vpc_id
 
-  name               = "production-ready-k8s-demo"
+  name               = "production-ready-k8s"
   namespace          = "demo"
   stage              = "dev"
 
