@@ -25,9 +25,11 @@ module "eks" {
 
   worker_groups = [
     {
-      subnets       = var.private_subnet_ids
-      instance_type = var.instance_type
-      asg_max_size  = var.max_size
+      subnets               = var.private_subnet_ids
+      instance_type         = var.instance_type
+      asg_max_size          = var.max_size
+      asg_min_size          = var.min_size
+      asg_desired_capacity  = var.desired_size
     }
   ]
 }

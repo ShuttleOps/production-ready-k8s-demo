@@ -28,9 +28,19 @@ variable "instance_type" {
   description = "The instance type to use for the EKS workers."
 }
 
+variable "min_size" {
+  type        = number
+  description = "The minimum size of the EKS worker AutoScalingGroup."
+}
+
 variable "max_size" {
   type        = number
   description = "The maximum size of the EKS worker AutoScalingGroup."
+}
+
+variable "desired_size" {
+  type        = number
+  description = "The desired size of the EKS worker AutoScalingGroup."
 }
 
 variable "iam_users" {

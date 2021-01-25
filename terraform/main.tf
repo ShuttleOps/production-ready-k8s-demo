@@ -8,9 +8,9 @@ data "aws_region" "current" {
 locals {
   name = "production-ready-k8s-demo"
 
-  eks_cluster_min_size      = 2
-  eks_cluster_max_size      = 2
-  eks_cluster_desired_size  = 2
+  eks_cluster_min_size      = 3
+  eks_cluster_max_size      = 3
+  eks_cluster_desired_size  = 3
   eks_node_disk_size        = 50
   eks_node_types            = "t3.medium"
 }
@@ -50,7 +50,9 @@ module "eks" {
   private_subnet_ids = module.vpc.private_subnets
   vpc_id             = module.vpc.vpc_id
   name               = local.name
+  min_size           = local.eks_cluster_min_size
   max_size           = local.eks_cluster_max_size
+  desired_size       = local.eks_cluster_desired_size
   instance_type      = local.eks_node_types
   kubernetes_version = "1.18"
   iam_users          = var.iam_users
