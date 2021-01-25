@@ -28,8 +28,21 @@ iam_users = [
 
 ## k8s Usage Instructions
 
-Setting up a kubeconfig for the EKS cluster:
+Set up a kubeconfig for the EKS cluster:
 
 ```
 $ aws eks --region us-east-2 update-kubeconfig --name production-ready-k8s-demo
+```
+
+Set up ArgoCD:
+
+```
+$ kubectl create namespace argocd
+$ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+```
+
+Expose ArgoCD externally (don't worry, it is behind authentication):
+
+```
+$ kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
 ```
