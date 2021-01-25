@@ -1,5 +1,7 @@
 module "label" {
-  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.22.1"
+  source  = "cloudposse/label/terraform"
+  version = "0.5.1"
+
   namespace  = var.namespace
   name       = var.name
   stage      = var.stage
@@ -9,7 +11,9 @@ module "label" {
 }
 
 module "eks_cluster" {
-  source                                    = "git::https://github.com/cloudposse/terraform-aws-eks-cluster.git?ref=tags/0.32.0"
+  source  = "cloudposse/eks-cluster/aws"
+  version = "0.32.0"
+
   namespace                                 = var.namespace
   stage                                     = var.stage
   name                                      = var.name
@@ -23,7 +27,6 @@ module "eks_cluster" {
   oidc_provider_enabled                     = var.oidc_provider_enabled
   enabled_cluster_log_types                 = var.enabled_cluster_log_types
   cluster_log_retention_period              = var.cluster_log_retention_period
-  kubernetes_config_map_ignore_role_changes = var.kubernetes_config_map_ignore_role_changes
   map_additional_iam_roles                  = var.map_additional_iam_roles
   map_additional_iam_users                  = var.map_additional_iam_users
   map_additional_aws_accounts               = var.map_additional_aws_accounts
@@ -31,27 +34,17 @@ module "eks_cluster" {
   endpoint_public_access                    = var.endpoint_public_access
 }
 
-# Ensure ordering of resource creation to eliminate the race conditions when applying the Kubernetes Auth ConfigMap.
-# Do not create Node Group before the EKS cluster is created and the `aws-auth` Kubernetes ConfigMap is applied.
-# Otherwise, EKS will create the ConfigMap first and add the managed node role ARNs to it,
-# and the kubernetes provider will throw an error that the ConfigMap already exists (because it can't update the map, only create it).
-# If we create the ConfigMap first (to add additional roles/users/accounts), EKS will just update it by adding the managed node role ARNs.
-data "null_data_source" "wait_for_cluster_and_kubernetes_configmap" {
-  inputs = {
-    cluster_name             = module.eks_cluster.eks_cluster_id
-    kubernetes_config_map_id = module.eks_cluster.kubernetes_config_map_id
-  }
-}
-
 module "eks_node_group" {
-  source            = "git::https://github.com/cloudposse/terraform-aws-eks-node-group.git?ref=tags/0.17.1"
+  source  = "cloudposse/eks-node-group/aws"
+  version = "0.17.1"
+
   namespace         = var.namespace
   stage             = var.stage
   name              = var.name
   attributes        = var.attributes
   tags              = var.tags
   subnet_ids        = var.subnet_ids
-  cluster_name      = data.null_data_source.wait_for_cluster_and_kubernetes_configmap.outputs["cluster_name"]
+  cluster_name      = module.eks_cluster.eks_cluster_id
   instance_types    = var.instance_types
   desired_size      = var.desired_size
   min_size          = var.min_size

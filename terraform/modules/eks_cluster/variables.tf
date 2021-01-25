@@ -142,12 +142,6 @@ variable "min_size" {
   description = "The minimum size of the AutoScaling Group"
 }
 
-variable "kubernetes_config_map_ignore_role_changes" {
-  type        = bool
-  default     = true
-  description = "Set to `true` to ignore IAM role changes in the Kubernetes Auth ConfigMap"
-}
-
 variable "endpoint_private_access" {
   type        = bool
   default     = false
