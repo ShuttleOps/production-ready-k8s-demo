@@ -1,5 +1,5 @@
 module "label" {
-  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.16.0"
+  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.22.1"
   namespace  = var.namespace
   name       = var.name
   stage      = var.stage
@@ -9,7 +9,7 @@ module "label" {
 }
 
 module "eks_cluster" {
-  source                                    = "git::https://github.com/cloudposse/terraform-aws-eks-cluster.git?ref=tags/0.24.0"
+  source                                    = "git::https://github.com/cloudposse/terraform-aws-eks-cluster.git?ref=tags/0.32.0"
   namespace                                 = var.namespace
   stage                                     = var.stage
   name                                      = var.name
@@ -44,7 +44,7 @@ data "null_data_source" "wait_for_cluster_and_kubernetes_configmap" {
 }
 
 module "eks_node_group" {
-  source            = "git::https://github.com/cloudposse/terraform-aws-eks-node-group.git?ref=tags/0.4.0"
+  source            = "git::https://github.com/cloudposse/terraform-aws-eks-node-group.git?ref=tags/0.17.1"
   namespace         = var.namespace
   stage             = var.stage
   name              = var.name
