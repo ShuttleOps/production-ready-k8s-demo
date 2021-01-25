@@ -52,4 +52,5 @@ module "eks" {
   max_size           = local.eks_cluster_max_size
   instance_type      = local.eks_node_types
   kubernetes_version = "1.18"
+  iam_users          = var.iam_users
 }

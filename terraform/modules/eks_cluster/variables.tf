@@ -27,3 +27,12 @@ variable "max_size" {
   type        = number
   description = "The maximum size of the EKS worker AutoScalingGroup."
 }
+
+variable "iam_users" {
+  type = list(object({
+    userarn = string
+    username = string
+    groups = list(string)
+  }))
+  description = "List of IAM users to map in AWS Auth ConfigMap (list of AWS IAM users allowed to interface with EKS control plane)."
+}

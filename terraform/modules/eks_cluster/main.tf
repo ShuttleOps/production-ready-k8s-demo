@@ -22,6 +22,7 @@ module "eks" {
   subnets           = var.subnet_ids
   vpc_id            = var.vpc_id
   write_kubeconfig  = false
+  map_users         = var.iam_users
 
   worker_groups = [
     {
