@@ -34,15 +34,43 @@ Set up a kubeconfig for the EKS cluster:
 $ aws eks --region us-east-2 update-kubeconfig --name production-ready-k8s-demo
 ```
 
+Set up ExternalDNS:
+
+```
+$ kubectl apply -f k8s-bootstrap/external-dns.yaml 
+```
+
 Set up ArgoCD:
 
 ```
-$ kubectl create namespace argocd
-$ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+$ helm repo add argo https://argoproj.github.io/argo-helm
+$ helm install argocd -n argocd --create-namespace -f k8s-bootstrap/argocd-values.yaml argo/argo-cd
 ```
 
-Expose ArgoCD externally (don't worry, it is behind authentication):
+Install ArgoCD (on Mac — adjust this step accordingly otherwise)
 
 ```
-$ kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+$ brew install argocd
 ```
+
+Get the initial ArgoCD password (which is the pod name of the API server):
+
+```
+$ kubectl get pods -n argocd -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f 2
+```
+
+Get the hostname of the LoadBalancer-type Service for ArgoCD:
+
+```
+$ kubectl get svc -n argocd argocd-server -o json | jq -r ".status.loadBalancer.ingress[0].hostname"
+```
+
+You can now log into the UI by visiting this endpoint — use the password retrieved earlier.
+
+You can also log into the ArgoCD CLI (getting the hostname of the LoadBalancer-type Service in the process):
+
+```
+$ argocd login $(kubectl get svc -n argocd argocd-server -o json | jq -r ".status.loadBalancer.ingress[0].hostname")
+```
+
+Enter `y` to proceed despite the invalid certificate name (if you do not have cert-manager set up against a domain); enter the password retrieved earlier.

@@ -19,7 +19,7 @@ module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
   version = "2.66.0"
 
-  name = "ecs-fargate-east"
+  name = local.name
   cidr = "10.50.0.0/16"
 
   azs = [
@@ -34,6 +34,11 @@ module "vpc" {
     "10.50.101.0/24",
     "10.50.102.0/24",
     "10.50.103.0/24"]
+
+  public_subnet_tags = {
+    "kubernetes.io/cluster/${local.name}" = "shared"
+    "kubernetes.io/role/elb" = 1
+  }
 
   enable_nat_gateway = true
   enable_vpn_gateway = true
