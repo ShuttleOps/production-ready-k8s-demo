@@ -7,3 +7,8 @@ output "cert_manager_role_arn" {
   description = "The IAM Role ARN for cert-manager"
   value       = module.iam_assumable_role_cert_manager.this_iam_role_arn
 }
+
+output "external_dns_role_arn" {
+  description = "The IAM Role ARN for external-dns"
+  value       = module.iam_assumable_role_external_dns.this_iam_role_arn
+}

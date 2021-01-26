@@ -75,3 +75,46 @@ module "iam_assumable_role_cert_manager" {
   role_policy_arns              = [aws_iam_policy.cert_manager.arn]
   oidc_fully_qualified_subjects = ["system:serviceaccount:cert-manager:cert-manager"]
 }
+
+resource "aws_iam_policy" "external_dns" {
+  name        = "${module.eks.cluster_id}-external-dns"
+  path        = "/"
+  description = "External DNS IAM Policy for ${module.eks.cluster_id}"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "route53:ChangeResourceRecordSets"
+      ],
+      "Resource": [
+        "arn:aws:route53:::hostedzone/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "route53:ListHostedZones",
+        "route53:ListResourceRecordSets"
+      ],
+      "Resource": [
+        "*"
+      ]
+    }
+  ]
+}
+EOF
+}
+
+module "iam_assumable_role_external_dns" {
+  source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+  version                       = "3.7.0"
+  create_role                   = true
+  role_name                     = "external-dns-${module.eks.cluster_id}"
+  provider_url                  = replace(module.eks.cluster_oidc_issuer_url, "https://", "")
+  role_policy_arns              = [aws_iam_policy.external_dns.arn]
+  oidc_fully_qualified_subjects = ["system:serviceaccount:external-dns:external-dns"]
+}
