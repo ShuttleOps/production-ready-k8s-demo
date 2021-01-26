@@ -51,3 +51,8 @@ variable "iam_users" {
   }))
   description = "List of IAM users to map in AWS Auth ConfigMap (list of AWS IAM users allowed to interface with EKS control plane)."
 }
+
+variable "route53_hosted_zone_id" {
+  type        = string
+  description = "The ID of the Hosted Zone used for this configuration."
+}

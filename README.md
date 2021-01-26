@@ -22,6 +22,7 @@ iam_users = [
     groups   = ["system:masters"]
   }
 ]
+route53_zone_id = "EXAMPLEEXAMPLE"
 ```
 
 3: Apply the configuration at the root level of the Terraform directory.

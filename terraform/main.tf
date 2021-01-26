@@ -51,16 +51,17 @@ module "vpc" {
 module "eks" {
   source = "./modules/eks_cluster"
 
-  public_subnet_ids  = module.vpc.public_subnets
-  private_subnet_ids = module.vpc.private_subnets
-  vpc_id             = module.vpc.vpc_id
-  name               = local.name
-  min_size           = local.eks_cluster_min_size
-  max_size           = local.eks_cluster_max_size
-  desired_size       = local.eks_cluster_desired_size
-  instance_type      = local.eks_node_types
-  kubernetes_version = "1.18"
-  iam_users          = var.iam_users
+  public_subnet_ids      = module.vpc.public_subnets
+  private_subnet_ids     = module.vpc.private_subnets
+  vpc_id                 = module.vpc.vpc_id
+  name                   = local.name
+  min_size               = local.eks_cluster_min_size
+  max_size               = local.eks_cluster_max_size
+  desired_size           = local.eks_cluster_desired_size
+  instance_type          = local.eks_node_types
+  kubernetes_version     = "1.18"
+  iam_users              = var.iam_users
+  route53_hosted_zone_id = var.route53_hosted_zone_id
 }
 
 

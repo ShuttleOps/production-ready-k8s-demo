@@ -7,3 +7,7 @@ output "external_dns_role_arn" {
   description = "The IAM Role ARN for external-dns"
   value       = module.iam_assumable_role_external_dns.this_iam_role_arn
 }
+
+output "wildcart_cert_arn" {
+  value = aws_acm_certificate.wildcard.arn
+}
