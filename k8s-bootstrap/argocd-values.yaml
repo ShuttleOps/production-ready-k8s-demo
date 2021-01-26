@@ -1,6 +1,10 @@
 server:
   service:
     annotations:
-      external-dns.alpha.kubernetes.io/hostname: argocd.example.org
-      service.beta.kubernetes.io/aws-load-balancer-ssl-cert: CERT_ARN
+      external-dns.alpha.kubernetes.io/hostname: argocd.example.com
+      service.beta.kubernetes.io/aws-load-balancer-ssl-cert: [WILDCARD CERT ARN]
+      service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "*"
+      service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
     type: LoadBalancer
+  extraArgs:
+    - --insecure
