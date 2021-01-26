@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  dummyapp:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-01-26T21:41:04.559631637Z"
+    description: A Helm chart for Kubernetes
+    digest: b1a750b0f4c9280c95c2c208e0851395b2abae116318205806f2d33b4538a9d6
+    name: dummyapp
+    type: application
+    urls:
+    - https://github.com/ShuttleOps/production-ready-k8s-demo/releases/download/dummyapp-0.1.1/dummyapp-0.1.1.tgz
+    version: 0.1.1
+generated: "2021-01-26T21:41:04.093895874Z"
