@@ -23,7 +23,7 @@ jobs:
         with:
           context: dummy-app/Dockerfile
           push: true
-          tags: $ECR_REPOSITORY:latest
+          tags: ${{ secrets.ECR_REPOSITORY }}:latest
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
