@@ -8,9 +8,9 @@ data "aws_region" "current" {
 locals {
   name = "production-ready-k8s-demo"
 
-  eks_cluster_min_size      = 3
-  eks_cluster_max_size      = 3
-  eks_cluster_desired_size  = 3
+  eks_cluster_min_size      = 5
+  eks_cluster_max_size      = 5
+  eks_cluster_desired_size  = 5
   eks_node_disk_size        = 50
   eks_node_types            = "t3.medium"
 }
