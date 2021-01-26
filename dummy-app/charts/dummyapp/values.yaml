@@ -74,6 +74,7 @@ autoscaling:
 
 prometheus:
   enabled: false
+  namespace: prometheus
 
 nodeSelector: {}
 

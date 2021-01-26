@@ -3,6 +3,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: {{ include "dummyapp.fullname" . }}
+  namespace: {{ .Values.prometheus.namespace }}
   labels:
     {{- include "dummyapp.labels" . | nindent 4 }}
 spec:
