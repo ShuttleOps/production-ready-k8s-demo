@@ -28,6 +28,14 @@ resource "aws_iam_user_policy" "ecr_ci_iam_policy" {
             "ecr:CompleteLayerUpload"
          ],
          "Resource":"${aws_ecr_repository.ecr.arn}"
+      },
+      {
+         "Sid":"GetAuthorizationToken",
+         "Effect":"Allow",
+         "Action":[
+            "ecr:GetAuthorizationToken"
+         ],
+         "Resource":"*"
       }
    ]
 }
