@@ -5,6 +5,10 @@ resource "aws_ecr_repository" "ecr" {
   image_scanning_configuration {
     scan_on_push = true
   }
+
+  lifecycle {
+    create_before_destroy = false
+  }
 }
 
 resource "aws_iam_user_policy" "ecr_ci_iam_policy" {
@@ -44,6 +48,9 @@ EOF
 
 resource "aws_iam_user" "ecr_ci_iam_user" {
   name = "${var.name}-ecr-iam-user"
+  lifecycle {
+    create_before_destroy = false
+  }
 }
 
 resource "aws_iam_access_key" "ecr_ci_iam_user_credentials" {
