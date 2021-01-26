@@ -64,4 +64,7 @@ module "eks" {
   route53_hosted_zone_id = var.route53_hosted_zone_id
 }
 
-
+module "ecr" {
+  source = "./modules/ecr_repository"
+  name   = local.name
+}
