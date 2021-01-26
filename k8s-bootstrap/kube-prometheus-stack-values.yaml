@@ -1,0 +1,9 @@
+grafana:
+  service:
+    type: LoadBalancer
+    port: 443
+    annotations:
+      external-dns.alpha.kubernetes.io/hostname: grafana.example.org
+      service.beta.kubernetes.io/aws-load-balancer-ssl-cert: CERT_ARN
+  adminPassword: YOUR_PASSWORD
+

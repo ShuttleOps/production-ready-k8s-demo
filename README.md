@@ -27,7 +27,7 @@ route53_zone_id = "EXAMPLEEXAMPLE"
 
 3: Apply the configuration at the root level of the Terraform directory.
 
-## k8s Usage Instructions
+## k8s-bootstrap Usage Instructions
 
 Set up a kubeconfig for the EKS cluster:
 
@@ -35,20 +35,24 @@ Set up a kubeconfig for the EKS cluster:
 $ aws eks --region us-east-2 update-kubeconfig --name production-ready-k8s-demo
 ```
 
-Set up ExternalDNS:
+### Set up ExternalDNS
+
+Install external-dns using kubectl:
 
 ```
-$ kubectl apply -f k8s-bootstrap/external-dns.yaml 
+$ kubectl apply -f k8s-bootstrap/external-dns.yaml
 ```
 
-Set up ArgoCD:
+### Set up ArgoCD
+
+Install via the official helm chart:
 
 ```
 $ helm repo add argo https://argoproj.github.io/argo-helm
 $ helm install argocd -n argocd --create-namespace -f k8s-bootstrap/argocd-values.yaml argo/argo-cd
 ```
 
-Install ArgoCD (on Mac — adjust this step accordingly otherwise)
+Install ArgoCD (on Mac — adjust this step accordingly otherwise):
 
 ```
 $ brew install argocd
@@ -75,3 +79,20 @@ $ argocd login $(kubectl get svc -n argocd argocd-server -o json | jq -r ".statu
 ```
 
 Enter `y` to proceed despite the invalid certificate name (if you do not have cert-manager set up against a domain); enter the password retrieved earlier.
+
+### Set up monitoring components
+
+The monitoring components we will set up are:
+* prometheus
+* prometheus-operator
+* alert-manager
+* node-exporter
+* kube-state-metrics
+* grafana
+
+All components can be installed via the official community helm chart:
+
+```
+$ helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+$ helm install monitoring -n monitoring --create-namespace -f k8s-bootstrap/kube-prometheus-stack-values.yaml prometheus-community/kube-prometheus-stack
+```
