@@ -1,17 +1,17 @@
-env:
-  - name: ELASTICSEARCH_HOST
-    value: security-master
-  - name: ELASTICSEARCH_PORT
-    value: 9200
-  - name: ELASTICSEARCH_USER
-    valueFrom:
-      secretKeyRef:
-        name: elastic-credentials
-        key: username
-  - name: ELASTICSEARCH_PASS
-    valueFrom:
-      secretKeyRef:
-        name: elastic-credentials
-        key: password
 aggregator:
   configMap: elasticsearch-output
+  extraEnv:
+    - name: ELASTICSEARCH_HOST
+      value: "security-master"
+    - name: ELASTICSEARCH_PORT
+      value: "9200"
+    - name: ELASTICSEARCH_USER
+      valueFrom:
+        secretKeyRef:
+          name: elastic-credentials
+          key: username
+    - name: ELASTICSEARCH_PASS
+      valueFrom:
+        secretKeyRef:
+          name: elastic-credentials
+          key: password
