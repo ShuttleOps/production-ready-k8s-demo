@@ -6,10 +6,10 @@ env:
   - name: ELASTICSEARCH_USER
     valueFrom:
       secretKeyRef:
-        name: mysecret
+        name: elastic-credentials
         key: username
   - name: ELASTICSEARCH_PASS
     valueFrom:
       secretKeyRef:
-        name: mysecret
+        name: elastic-credentials
         key: password
