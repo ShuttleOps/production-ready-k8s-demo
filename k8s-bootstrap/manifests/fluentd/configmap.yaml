@@ -38,6 +38,7 @@ data:
       user "#{ENV['ELASTICSEARCH_USER']}"
       password "#{ENV['ELASTICSEARCH_PASS']}"
       scheme https
+      ssl_verify false
       logstash_format true
       <buffer>
         @type file
