@@ -1,0 +1,15 @@
+env:
+  - name: ELASTICSEARCH_HOST
+    value: security-master
+  - name: ELASTICSEARCH_PORT
+    value: 9200
+  - name: ELASTICSEARCH_USER
+    valueFrom:
+      secretKeyRef:
+        name: mysecret
+        key: username
+  - name: ELASTICSEARCH_PASS
+    valueFrom:
+      secretKeyRef:
+        name: mysecret
+        key: password
