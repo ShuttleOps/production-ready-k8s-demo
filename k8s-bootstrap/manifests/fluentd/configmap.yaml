@@ -36,7 +36,7 @@ data:
      @type tail
      @id in_tail_container_logs
      path /var/log/containers/*.log
-     pos_file /var/log/fluentd-containers.log.pos
+     pos_file /opt/bitnami/fluentd/logs/buffers/fluentd-docker.pos
      tag kubernetes.*
      read_from_head true
      format json
