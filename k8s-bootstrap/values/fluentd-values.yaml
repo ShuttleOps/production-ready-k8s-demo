@@ -13,3 +13,5 @@ env:
       secretKeyRef:
         name: elastic-credentials
         key: password
+aggregator:
+  configMap: elasticsearch-output
