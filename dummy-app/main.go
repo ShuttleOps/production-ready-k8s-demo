@@ -12,6 +12,9 @@ import (
 )
 
 func message(w http.ResponseWriter, r *http.Request) {
+	l := log.New(os.Stdout, "", 0)
+	l.SetPrefix(time.Now().Format("2006-01-02 15:04:05") + " ")
+	l.Printf("%s\n", r.RequestURI)
 	fmt.Fprintf(w, "Hello World")
 }
 
