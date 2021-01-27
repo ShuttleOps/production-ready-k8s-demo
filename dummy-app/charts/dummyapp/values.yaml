@@ -72,10 +72,6 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-prometheus:
-  enabled: false
-  namespace: prometheus
-
 nodeSelector: {}
 
 tolerations: []
