@@ -37,7 +37,7 @@ $ aws eks --region us-east-2 update-kubeconfig --name production-ready-k8s-demo
 
 ### Set up ExternalDNS
 
-Install external-dns using kubectl:
+Install external-dns using kubectl (replace the external dns IAM Role ARN in the manifest with the ARN revealed by running `terraform output`):
 
 ```
 $ kubectl apply -f k8s-bootstrap/external-dns.yaml
@@ -80,6 +80,10 @@ $ argocd login $(kubectl get svc -n argocd argocd-server -o json | jq -r ".statu
 
 Enter `y` to proceed despite the invalid certificate name (if you do not have cert-manager set up against a domain); enter the password retrieved earlier.
 
+### Deploy Dummy Application
+
+The dummy application can be deployed via ArgoCD via Helm with its overrides existing in the `k8s-bootstrap/values` directory. When pasting in these overrides, replace the image repository URI with that revealed by running `terraform output`.
+
 ### Set up monitoring components
 
 The monitoring components we will set up are:
@@ -90,9 +94,4 @@ The monitoring components we will set up are:
 * kube-state-metrics
 * grafana
 
-All components can be installed via the official community helm chart:
-
-```
-$ helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-$ helm install monitoring -n monitoring --create-namespace -f k8s-bootstrap/kube-prometheus-stack-values.yaml prometheus-community/kube-prometheus-stack
-```
+All components can be installed via ArgoCD via Helm with their overrides existing in the `k8s-bootstrap/values` directory. A `fluentd` ConfigMap manifest exists in the `k8s-bootstrap/manifests/fluentd` directory and can be installed in ArgoCD via the git repository (configure the application to use this repository as the upstream source). When pasting any overrides, replace values such as the external-dns host and wildcard ACM ARN revealed by running `terraform output`.

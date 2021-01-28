@@ -1,2 +1,6 @@
 service:
   type: LoadBalancer
+image:
+  repository: "[REPOSITORY URI]"
+  pullPolicy: Always
+  tag: latest
