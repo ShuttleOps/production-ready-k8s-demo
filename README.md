@@ -94,4 +94,13 @@ The monitoring components we will set up are:
 * kube-state-metrics
 * grafana
 
+All components can be installed via ArgoCD via Helm with their overrides existing in the `k8s-bootstrap/values` directory. When pasting any overrides, replace values such as the external-dns host and wildcard ACM ARN revealed by running `terraform output`.
+
+### Set up logging components
+
+The monitoring components we will set up are:
+* Elasticsearch
+* Kibana
+* Fluentd
+
 All components can be installed via ArgoCD via Helm with their overrides existing in the `k8s-bootstrap/values` directory. A `fluentd` ConfigMap manifest exists in the `k8s-bootstrap/manifests/fluentd` directory and can be installed in ArgoCD via the git repository (configure the application to use this repository as the upstream source). When pasting any overrides, replace values such as the external-dns host and wildcard ACM ARN revealed by running `terraform output`.
